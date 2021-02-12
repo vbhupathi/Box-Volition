@@ -1,0 +1,5 @@
+C:\Users\vbhupath\source\repos\BoxUserInvite\obj\Debug\net5.0\BoxUserInvite.csprojAssemblyReference.cache
+C:\Users\vbhupath\source\repos\BoxUserInvite\obj\Debug\net5.0\BoxUserInvite.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\vbhupath\source\repos\BoxUserInvite\obj\Debug\net5.0\BoxUserInvite.AssemblyInfoInputs.cache
+C:\Users\vbhupath\source\repos\BoxUserInvite\obj\Debug\net5.0\BoxUserInvite.AssemblyInfo.cs
+C:\Users\vbhupath\source\repos\BoxUserInvite\obj\Debug\net5.0\BoxUserInvite.csproj.CoreCompileInputs.cache
