@@ -7,31 +7,31 @@ using Microsoft.Extensions.Configuration;
 
 namespace BoxUserInvite
 {
-    /*
-    1. Add User secrets, Box.v2.core nuget
-    2. UserEmail, UserId
-    3. create a box Admin client
-    4. AdminToken 
-
-    */
-
     class Program
     {
-        public string UserEmail{get; set;}
         
-        public string UserId{get; set;}
 
         static void Main(string[] args)
         {
+            string UserEmail = "sampleemail@abc.edu";        
+            string UserId = "0123456789";
             var appConfig = new ConfigurationBuilder().AddUserSecrets<Program>().Build();
             var configJson = appConfig["BoxConfigJson"];
+            System.Console.WriteLine($"Creating a Box Admin Client");
+
             var config = BoxConfig.CreateFromJsonString(configJson);
             var auth = new BoxJWTAuth(config);
             var adminToken = auth.AdminToken();
             var boxClient = auth.AdminClient(adminToken);
+            System.Console.WriteLine($"Created a Box Admin Client");
+
+            var inviteEmail = new BoxActionableByRequest() {Login = UserEmail};
+            var inviteId = new BoxRequestEntity() { Id = UserId, Type = new BoxType()};
+            System.Console.WriteLine($"Inviting User to enterprise account");
+            boxClient.UsersManager.InviteUserToEnterpriseAsync(new BoxUserInviteRequest(){ Enterprise = inviteId, ActionableBy = inviteEmail});
+            System.Console.WriteLine($"User invited to enterprise account");
 
 
-            Console.WriteLine("Hello World!");
         }
     }
 }
