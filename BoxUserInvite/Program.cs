@@ -13,7 +13,6 @@ namespace BoxUserInvite
 
         static void Main(string[] args)
         {
-            string UserEmail = "sampleemail@abc.edu";
             var appConfig = new ConfigurationBuilder().AddUserSecrets<Program>().Build();
             var configJson = appConfig["BoxConfigJson"];            
             Console.WriteLine($"Creating a Box Admin Client");
@@ -22,7 +21,23 @@ namespace BoxUserInvite
             var adminToken = auth.AdminToken();
             var boxClient = auth.AdminClient(adminToken);
             Console.WriteLine($"Created a Box Admin Client");
-            InviteUser(UserEmail, config, boxClient);
+            GetUser(config, boxClient);
+        }
+
+        private static void GetUser(IBoxConfig config, BoxClient boxClient)
+        {
+            Console.WriteLine("Enter an email\n");
+            string UserEmail = Console.ReadLine();
+            var enterpriseusers = boxClient.UsersManager.GetEnterpriseUsersAsync(filterTerm:UserEmail);
+
+            if( enterpriseusers.Result.Entries.Count >= 1 )
+            {
+                Console.WriteLine($"One or more Box users are found with {UserEmail}\n ");                
+            }
+            else if(enterpriseusers.Result.Entries.Count == 0 )
+            {
+                InviteUser(UserEmail, config, boxClient);
+            }
         }
 
         private static void InviteUser(string UserEmail, IBoxConfig config, BoxClient boxClient)
